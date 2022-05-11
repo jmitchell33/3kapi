@@ -16,12 +16,12 @@ class ItemSerializer(serializers.ModelSerializer):
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
-        fields = ('id', 'name', 'realm', 'dungeon', 'scaler')
+        fields = ('id', 'name', 'realm', 'dungeon')
 
 class MonsterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Monster
-        fields = ('id', 'parent_area', 'short', 'description', 'size', 'notes')
+        fields = ('id', 'parent_area', 'short', 'description', 'size', 'notes', 'scaler')
 
 class MonsterAttackSerializer(serializers.ModelSerializer):
     class Meta:

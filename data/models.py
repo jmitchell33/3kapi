@@ -66,7 +66,6 @@ class Area(models.Model):
     name = models.CharField(max_length=255, blank=False)
     realm = models.CharField(choices=REALM_CHOICES, max_length=100, blank=True)
     dungeon = models.BooleanField(default=False)
-    scaler = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -77,9 +76,10 @@ class Monster(models.Model):
     description = models.TextField(blank=True)
     size = models.IntegerField(blank=True, null=True)
     notes = models.TextField(blank=True)
+    scaler = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.short
+        return '%a (Sclr: %a)' % (self.short, self.scaler)
 
 class Monster_AttackType(models.Model):
     parent_monster = models.ForeignKey(Monster, related_name='monster_damage_types', on_delete=models.CASCADE, blank=True, null=True)
