@@ -1,3 +1,5 @@
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
+
 async function getAreaData() {
   const response = await fetch("https://129.213.48.136/api/area/");
   const areaData = await response.json();
@@ -5,7 +7,7 @@ async function getAreaData() {
 }
 
 //Build Tabulator
-var table = new Tabulator("#example-table", {
+let table = new Tabulator("#example-table", {
   layout:"fitColumns",
   placeholder:"No Data Set",
   columns:[
