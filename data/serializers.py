@@ -26,7 +26,7 @@ class AreaSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'realm', 'dungeon')
 
 class MonsterSerializer(serializers.ModelSerializer):
-    parent_monster_name = serializers.PrimaryKeyRelatedField(
+    parent_area_name = serializers.PrimaryKeyRelatedField(
         queryset=Area.objects.all(), source='name', write_only=True
     )
 
