@@ -4,25 +4,13 @@ async function getAreaData() {
   return areaData.results;
 }
 
-window.Smart('#table', class {
-  get properties() {
-      return {
-          dataSource: new window.Smart.DataAdapter({
-              dataSource: getAreaData(),
-              dataSourceType: 'json',
-              dataFields: [
-                  'area: string',
-                  'realm: string'
-              ]
-          }),
-          editing: true,
-          selection: true,
-          keyboardNavigation: true,
-          sortMode: 'one',
-          columns: [
-              { label: 'Area', dataField: 'area', dataType: 'string', allowEdit: false },
-              { label: 'Realm', dataField: 'realm', dataType: 'string' },
-          ]
-      };
-  }
+//Build Tabulator
+var table = new Tabulator("#example-table", {
+  layout:"fitColumns",
+  placeholder:"No Data Set",
+  columns:[
+      {title:"Name", field:"name", sorter:"string", width:200},
+      {title:"Realm", field:"realm", sorter:"string"},
+  ],
+  data: getAreaData()
 });
