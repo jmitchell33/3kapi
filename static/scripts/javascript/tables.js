@@ -1,29 +1,28 @@
+async function getAreaData() {
+  const response = await fetch("https://129.213.48.136/api/area/");
+  const areaData = await response.json();
+  console.log(areaData);
+}
+
+
 Smart('#table', class {
   get properties() {
     return {
         dataSource: new Smart.DataAdapter(
       {
-        dataSource: getCountriesData(),
+        dataSource: getAreaData(),
         dataFields:
         [
-          'ID: number',
-          'Country: string',
-          'Area: number',
-          'Population_Urban: number',
-          'Population_Rural: number',
-          'Population_Total: number',
-          'GDP_Agriculture: number',
-          'GDP_Industry: number',
-          'GDP_Services: number',
-          'GDP_Total: number'
+          'id: number',
+          'name: string',
+          'realm: number',
+          'dungeon: boolean'
         ]
       }),
       columns: [
-        'Country',
-        'Area',
-        'Population_Rural',
-        'Population_Total',
-        'GDP_Total'
+        'name',
+        'realm',
+        'dungeon'
       ]
     }
   }
@@ -32,5 +31,5 @@ Smart('#table', class {
 window.onload = function() {
   const table = document.getElementById('table');
   
-  table.sortBy('Population_Total', 'asc');
+  table.sortBy('name', 'asc');
 }
