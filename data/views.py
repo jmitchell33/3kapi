@@ -59,8 +59,15 @@ class RoomDetail(viewsets.ModelViewSet):
         new_data = copy.deepcopy(request.data)
         area_name = new_data.get('parent_area')
         try:
-            parent_pk = models.Area.objects.filter(name=area_name).first()['pk']
+            parent_pk = models.Area.objects.filter(name=area_name).first().pk
             new_data['parent_area'] = parent_pk
+            serializer = self.get_serializer(data=new_data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        except ObjectDoesNotExist:
+            new_data['parent_area'] = None
             serializer = self.get_serializer(data=new_data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
