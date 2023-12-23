@@ -60,7 +60,8 @@ class RoomDetail(viewsets.ModelViewSet):
         area_name = new_data.get('parent_area')
         try:
             parent_pk = models.Area.objects.filter(name=area_name).first()['pk']
-            serializer = self.get_serializer(data=request.data)
+            new_data['parent_area'] = parent_pk
+            serializer = self.get_serializer(data=new_data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
