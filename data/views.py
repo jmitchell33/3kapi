@@ -14,7 +14,7 @@ class EternalPowerDetail(viewsets.ModelViewSet):
     # We will always use update, if the character/eternal doesn't exist we'll create it
     def create(self, request, *args, **kwargs):
         partial = True
-        character = kwargs.pop('character', False)
+        character = request.data.get('character')
         try:
             instance = models.Eternal_Powers.objects.get(character=character)
             serializer = self.get_serializer(instance, data=request.data, partial=partial)
