@@ -11,7 +11,7 @@ class EternalPowerDetail(viewsets.ModelViewSet):
     serializer_class = serializers.EternalPowersSerializer 
 
     # We will always use update, if the character/eternal doesn't exist we'll create it
-    def update(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         partial = True
         character = kwargs.pop('character')
         try:
