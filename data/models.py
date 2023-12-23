@@ -15,6 +15,140 @@ DAMAGE_CHOICES = (
     ('radiation', 'radiation')
 )
 
+COMPONENT_QUALITY_CHOICES = (
+    ('legendary', 'legendary'),
+    ('superior', 'superior'),
+    ('good', 'good'),
+    ('average', 'average'),
+    ('poor', 'poor'),
+)
+
+COMPONENT_CHOICES = (
+    ('aquamarine', 'aquamarine'),
+    ('aquamarine dust', 'aquamarine dust'),
+    ('copper shards', 'copper shards'),
+    ('morganite', 'morganite'),
+    ('morganite dust', 'morganite dust'),
+    ('tigers eye', 'tigers eye'),
+    ('tigers eye dust', 'tigers eye dust'),
+    ('fragment of light', 'fragment of light'),
+    ('fragment of water', 'fragment of water'),
+    ('fragment of shadow', 'fragment of shadow'),
+    ('bronze shards', 'bronze shards'),
+    ('cats eye', 'cats eye'),
+    ('cats eye dust', 'cats eye dust'),
+    ('eye of flame', 'eye of flame'),
+    ('garnet', 'garnet'),
+    ('garnet dust', 'garnet dust'),
+    ('fragment of might', 'fragment of might'),
+    ('alexandrite', 'alexandrite'),
+    ('alexandrite dust', 'alexandrite dust'),
+    ('eye of frost', 'eye of frost'),
+    ('iron shards', 'iron shards'),
+    ('fragment of rejuvenation', 'fragment of rejuvenation'),
+    ('fragment of rage', 'fragment of rage'),
+    ('fragment of soul', 'fragment of soul'),
+    ('steel shards', 'steel shards'),
+    ('fragment of the unseen', 'fragment of the unseen'),
+    ('beryl', 'beryl'),
+    ('beryl dust', 'beryl dust'),
+    ('eye of earth', 'eye of earth'),
+    ('pyrite', 'pyrite'),
+    ('pyrite dust', 'pyrite dust'),
+    ('roans tears', 'roans tears'),
+    ('silver shards', 'silver shards'),
+    ('tourmaline', 'tourmaline'),
+    ('tourmaline dust', 'tourmaline dust'),
+    ('fragment of ascension', 'fragment of ascension'),
+    ('fragment of blasting', 'fragment of blasting'),
+    ('fragment of damnation', 'fragment of damnation'),
+    ('amethyst', 'amethyst'),
+    ('amethyst dust', 'amethyst dust'),
+    ('eye of air', 'eye of air'),
+    ('gold shards', 'gold shards'),
+    ('happy eds tears', 'happy eds tears'),
+    ('topaz', 'topaz'),
+    ('topaz dust', 'topaz dust'),
+    ('fragment of willy', 'fragment of willy'),
+    ('fragment of destruction', 'fragment of destruction'),
+    ('fragment of compassion', 'fragment of compassion'),
+    ('fragment of knowledge', 'fragment of knowledge'),
+    ('core of flame', 'core of flame'),
+    ('essence of light', 'essence of light'),
+    ('heliodor', 'heliodor'),
+    ('heliodor dust', 'heliodor dust'),
+    ('hematite', 'hematite'),
+    ('hematite dust', 'hematite dust'),
+    ('mithril shards', 'mithril shards'),
+    ('essence of water', 'essence of water'),
+    ('essence of shadow', 'essence of shadow'),
+    ('essence of might', 'essence of might'),
+    ('core of frost', 'core of frost'),
+    ('peridot', 'peridot'),
+    ('peridot dust', 'peridot dust'),
+    ('titanium shards', 'titanium shards'),
+    ('essence of rejuvenation', 'essence of rejuvenation'),
+    ('essence of rage', 'essence of rage'),
+    ('essence of soul', 'essence of soul'),
+    ('essence of the unseen', 'essence of the unseen'),
+    ('core of earth', 'core of earth'),
+    ('ebon shards', 'ebon shards'),
+    ('essence of ascension', 'essence of ascension'),
+    ('essence of blasting', 'essence of blasting'),
+    ('adamantim shards', 'adamantim shards'),
+    ('core of air', 'core of air'),
+    ('essence of damnation', 'essence of damnation'),
+    ('pearl', 'pearl'),
+    ('pearl dust', 'pearl dust'),
+    ('essence of willy', 'essence of willy'),
+    ('essence of destruction', 'essence of destruction'),
+    ('ghotis tears', 'ghotis tears'),
+    ('obsidian shards', 'obsidian shards'),
+    ('opal', 'opal'),
+    ('opal dust', 'opal dust'),
+    ('essence of compassion', 'essence of compassion'),
+    ('essence of knowledge', 'essence of knowledge'),
+    ('star of flame', 'star of flame'),
+    ('nethernium shards', 'nethernium shards'),
+    ('heart of light', 'heart of light'),
+    ('heart of water', 'heart of water'),
+    ('heart of shadow', 'heart of shadow'),
+    ('heart of might', 'heart of might'),
+    ('diamond', 'diamond'),
+    ('diamond dust', 'diamond dust'),
+    ('star of frost', 'star of frost'),
+    ('shansabyks tears', 'shansabyks tears'),
+    ('voidstone shards', 'voidstone shards'),
+    ('heart of rejuvenation', 'heart of rejuvenation'),
+    ('heart of rage', 'heart of rage'),
+    ('heart of soul', 'heart of soul'),
+    ('emerald', 'emerald'),
+    ('emerald dust', 'emerald dust'),
+    ('star of air', 'star of air'),
+    ('star of earth', 'star of earth'),
+    ('sapphire dust', 'sapphire dust'),
+    ('sapphire', 'sapphire'),
+    ('phasemetal shards', 'phasemetal shards'),
+    ('heart of the unseen', 'heart of the unseen'),
+    ('heart of ascension', 'heart of ascension'),
+    ('heart of blasting', 'heart of blasting'),
+    ('heart of damnation', 'heart of damnation'),
+    ('chaostone shards', 'chaostone shards'),
+    ('ruby', 'ruby'),
+    ('heart of willy', 'heart of willy'),
+    ('heart of destruction', 'heart of destruction'),
+    ('heart of compassion', 'heart of compassion'),
+    ('heart of knowledge', 'heart of knowledge'),
+    ('mithril ore', 'mithril ore'),
+    ('titanium ore', 'titanium ore'),
+    ('ebon ore', 'ebon ore'),
+    ('obsidian ore', 'obsidian ore'),
+    ('nethernium ore', 'nethernium ore'),
+    ('voidstone ore', 'voidstone ore'),
+    ('phasemetal ore', 'phasemetal ore'),
+    ('chaostone ore', 'chaostone ore')
+)
+
 ATTACK_TYPE_CHOICES = (
     ('Normal', 'Normal'),
     ('Special', 'Special')
@@ -125,7 +259,23 @@ class Item(models.Model):
 
     def __str__(self):
         return self.short
+
+class Crafting_Component(models.Model):
+    component_name = models.CharField(choices=COMPONENT_CHOICES, max_length=100, blank=False)
+    component_quality = models.CharField(choices=COMPONENT_QUALITY_CHOICES, max_length=50, blank=False)
+    min_level = models.IntegerField(null=False)
+    max_level = models.IntegerField(null=False)
+
+    def __str__(self) -> str:
+        return '%a (Qlty: %a)' % (self.component_name, self.component_quality)
     
+class Crafting_Satchel(models.Model):
+    character = models.CharField(max_length=255, blank=False)
+    component = models.ForeignKey(Crafting_Component, related_name = 'satchel_components', on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.IntegerField(null=True)
+
+    def __str__(self) -> str:
+        return '%a (Qty: %a)' % (self.component.component_name, self.quantity)
 
 class Eternal_Powers(models.Model):
     character = models.CharField(max_length=255, blank=False)
