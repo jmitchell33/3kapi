@@ -1,3 +1,4 @@
+import copy
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -52,6 +53,20 @@ class AreaDetail(viewsets.ModelViewSet):
 class RoomDetail(viewsets.ModelViewSet):
     queryset = models.Room.objects.all()
     serializer_class = serializers.RoomSerializer
+
+    def create(self, request, *args, **kwargs):
+        partial = True
+        new_data = copy.deepcopy(request.data)
+        area_name = new_data.get('parent_area')
+        try:
+            parent_pk = models.Area.objects.filter(name=area_name).first()['pk']
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 class MonsterAttackDetail(viewsets.ModelViewSet):
     queryset = models.Monster_AttackType.objects.all()
