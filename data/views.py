@@ -11,7 +11,7 @@ class EternalPowerDetail(viewsets.ModelViewSet):
     queryset = models.Eternal_Powers.objects.all()
     serializer_class = serializers.EternalPowersSerializer 
 
-    # We will always use update, if the character/eternal doesn't exist we'll create it
+    # We will attempt to update first, if the character/eternal doesn't exist we'll create it
     def create(self, request, *args, **kwargs):
         partial = True
         character = request.data.get('character')
@@ -36,8 +36,6 @@ class EternalPowerDetail(viewsets.ModelViewSet):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        
-
 
 class ItemDetail(viewsets.ModelViewSet):
     queryset = models.Item.objects.all()
@@ -50,6 +48,10 @@ class MonsterDetail(viewsets.ModelViewSet):
 class AreaDetail(viewsets.ModelViewSet):
     queryset = models.Area.objects.all()
     serializer_class = serializers.AreaSerializer
+
+class RoomDetail(viewsets.ModelViewSet):
+    queryset = models.Room.objects.all()
+    serializer_class = serializers.RoomSerializer
 
 class MonsterAttackDetail(viewsets.ModelViewSet):
     queryset = models.Monster_AttackType.objects.all()

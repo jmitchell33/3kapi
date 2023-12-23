@@ -198,8 +198,20 @@ REALM_CHOICES = (
 
 class Area(models.Model):
     name = models.CharField(max_length=255, blank=False)
+    wizard = models.CharField(max_length=255, blank=True)
     realm = models.CharField(choices=REALM_CHOICES, max_length=100, blank=True)
     dungeon = models.BooleanField(default=False)
+    room_count = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Room(models.Model):
+    roomID = models.IntegerField(blank=True, null=True)
+    parent_area = models.ForeignKey(Area, related_name='area_rooms', on_delete=models.CASCADE, blank=True, null=True)
+    room_short = models.CharField(max_length=255, blank=True)
+    room_exits = models.CharField(max_length=255, blank=True)
+    room_long = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
