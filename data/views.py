@@ -86,7 +86,7 @@ class CraftingComponentDetail(viewsets.ReadOnlyModelViewSet):
 
 class CraftingSatchelDetail(viewsets.ModelViewSet):
     queryset = models.Crafting_Satchel.objects.all()
-    serializer_class = serializers.Crafting_Satchel 
+    serializer_class = serializers.SatchelSerializer 
 
     # We will attempt to update first, if the character + component type + quantity doesn't exist we'll create it
     def create(self, request, *args, **kwargs):
