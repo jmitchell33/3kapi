@@ -93,9 +93,9 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
         partial = True
         character = request.data.get('character')
         component = request.data.get('component')
-        quality = request.data.get('quality')
+        component_quality = request.data.get('component_quality')
         try:
-            instance = models.Crafting_Satchel.objects.get(character=character, component=component, quality=quality)
+            instance = models.Crafting_Satchel.objects.get(character=character, component=component, component_quality=component_quality)
             serializer = self.get_serializer(instance, data=request.data, partial=partial)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
