@@ -9,5 +9,6 @@ router.register(r'area', views.AreaDetail, basename='area_detail')
 router.register(r'room', views.RoomDetail, basename='room_detail')
 router.register(r'item', views.ItemDetail, basename='item_detail')
 router.register(r'monster', views.MonsterDetail, basename='monster_detail')
+router.register(r'crafting_components', views.CraftingComponentDetail, basename='crafting_component_detail')
 
 urlpatterns = router.urls

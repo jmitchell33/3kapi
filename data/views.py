@@ -79,3 +79,7 @@ class RoomDetail(viewsets.ModelViewSet):
 class MonsterAttackDetail(viewsets.ModelViewSet):
     queryset = models.Monster_AttackType.objects.all()
     serializer_class = serializers.MonsterAttackSerializer
+
+class CraftingComponentDetail(viewsets.ModelViewSet):
+    queryset = models.Crafting_Component.objects.all()
+    serializer_class = serializers.CraftingComponentSerializer
