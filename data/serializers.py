@@ -47,6 +47,11 @@ class MonsterAttackSerializer(serializers.ModelSerializer):
         model = Monster_AttackType
         fields = ('id', 'parent_monster', 'parent_monster_name', 'damage_type', 'attack_type')
 
+class SatchelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crafting_Satchel
+        fields = ('id', 'character', 'component', 'quantity', 'component_quality')
+
 class CraftingComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crafting_Component
