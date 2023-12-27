@@ -92,10 +92,11 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         partial = True
         character = request.data.get('character')
-        component = request.data.get('component')
+        component_name = request.data.get('component')
+        component_pk = models.Crafting_Component.objects.get(component_name=component_name).pk
         component_quality = request.data.get('component_quality')
         try:
-            instance = models.Crafting_Satchel.objects.get(character=character, component=component, component_quality=component_quality)
+            instance = models.Crafting_Satchel.objects.get(character=character, component=component_pk, component_quality=component_quality)
             serializer = self.get_serializer(instance, data=request.data, partial=partial)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
