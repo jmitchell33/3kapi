@@ -278,7 +278,7 @@ class Crafting_Component(models.Model):
     max_level = models.IntegerField(null=False)
 
     def __str__(self) -> str:
-        return '%a (Qlty: %a)' % (self.component_name, self.component_quality)
+        return '%a' % (self.component_name)
     
 class Crafting_Satchel(models.Model):
     character = models.CharField(max_length=255, blank=False)
