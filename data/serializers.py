@@ -50,4 +50,4 @@ class MonsterAttackSerializer(serializers.ModelSerializer):
 class CraftingComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crafting_Component
-        fields = ('id', 'component_name', 'component_quality', 'min_level', 'max_level')
+        fields = ('id', 'component_name', 'min_level', 'max_level')

@@ -274,7 +274,6 @@ class Item(models.Model):
 
 class Crafting_Component(models.Model):
     component_name = models.CharField(choices=COMPONENT_CHOICES, max_length=100, blank=False)
-    component_quality = models.CharField(choices=COMPONENT_QUALITY_CHOICES, max_length=50, blank=False)
     min_level = models.IntegerField(null=False)
     max_level = models.IntegerField(null=False)
 
@@ -285,6 +284,7 @@ class Crafting_Satchel(models.Model):
     character = models.CharField(max_length=255, blank=False)
     component = models.ForeignKey(Crafting_Component, related_name = 'satchel_components', on_delete=models.CASCADE, blank=True, null=True)
     quantity = models.IntegerField(null=True)
+    component_quality = models.CharField(choices=COMPONENT_QUALITY_CHOICES, max_length=50, blank=False)
 
     def __str__(self) -> str:
         return '%a (Qty: %a)' % (self.component.component_name, self.quantity)
