@@ -91,13 +91,15 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
     # We will attempt to update first, if the character + component type + quantity doesn't exist we'll create it
     def create(self, request, *args, **kwargs):
         partial = True
-        character = request.data.get('character').lower()
-        component_name = request.data.get('component').lower()
+        new_data = copy.deepcopy(request.data)
+        character = new_data.get('character').lower()
+        component_name = new_data.get('component').lower()
         component_pk = models.Crafting_Component.objects.get(component_name=component_name).pk
-        component_quality = request.data.get('component_quality').lower()
+        new_data['component'] = component_pk
+        component_quality = new_data.get('component_quality').lower()
         try:
-            instance = models.Crafting_Satchel.objects.get(character=character, component=component_pk, component_quality=component_quality)
-            serializer = self.get_serializer(instance, data=request.data, partial=partial)
+            instance = models.Crafting_Satchel.objects.get(character=character, component=new_data['component'], component_quality=component_quality)
+            serializer = self.get_serializer(instance, data=new_data, partial=partial)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
 
@@ -110,7 +112,7 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
                 prefetch_related_objects([instance], *queryset._prefetch_related_lookups)
             return Response(serializer.data)
         except ObjectDoesNotExist:
-            serializer = self.get_serializer(data=request.data)
+            serializer = self.get_serializer(data=new_data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
