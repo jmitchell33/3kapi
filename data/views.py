@@ -91,10 +91,10 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
     # We will attempt to update first, if the character + component type + quantity doesn't exist we'll create it
     def create(self, request, *args, **kwargs):
         partial = True
-        character = request.data.get('character')
-        component_name = request.data.get('component')
+        character = request.data.get('character').lower()
+        component_name = request.data.get('component').lower()
         component_pk = models.Crafting_Component.objects.get(component_name=component_name).pk
-        component_quality = request.data.get('component_quality')
+        component_quality = request.data.get('component_quality').lower()
         try:
             instance = models.Crafting_Satchel.objects.get(character=character, component=component_pk, component_quality=component_quality)
             serializer = self.get_serializer(instance, data=request.data, partial=partial)
