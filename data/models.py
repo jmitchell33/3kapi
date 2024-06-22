@@ -218,11 +218,13 @@ class Room(models.Model):
 
 class Monster(models.Model):
     parent_area = models.ForeignKey(Area, related_name='area_monsters', on_delete=models.CASCADE, blank=True, null=True)
+    parent_room = models.ForeignKey(Room, related_name='room_monsters', on_delete=models.CASCADE, blank=True, null=True)
     short = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
     size = models.IntegerField(blank=True, null=True)
     notes = models.TextField(blank=True)
     scaler = models.IntegerField(blank=True, null=True)
+
 
     def __str__(self):
         return '%a (Sclr: %a)' % (self.short, self.scaler)

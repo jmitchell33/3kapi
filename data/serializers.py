@@ -36,7 +36,7 @@ class MonsterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Monster
-        fields = ('id', 'parent_area', 'parent_area_name', 'short', 'description', 'size', 'notes', 'scaler')
+        fields = ('id', 'parent_area', 'parent_room', 'parent_area_name', 'short', 'description', 'size', 'notes', 'scaler')
 
 class MonsterAttackSerializer(serializers.ModelSerializer):
     parent_monster_name = serializers.PrimaryKeyRelatedField(

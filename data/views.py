@@ -46,6 +46,32 @@ class MonsterDetail(viewsets.ModelViewSet):
     queryset = models.Monster.objects.all()
     serializer_class = serializers.MonsterSerializer
 
+    def create(self, request, *args, **kwargs):
+        partial = True
+        new_data = copy.deepcopy(request.data)
+        area_name = new_data.get('parent_area')
+        roomID = new_data.get('roomID')
+        try:
+            parent_area_pk = models.Area.objects.filter(name=area_name).first().pk
+            new_data['parent_area'] = parent_area_pk
+        except ObjectDoesNotExist:
+            new_data['parent_area'] = None
+            
+        try:
+            parent_room_pk = models.Room.objects.filter(roomID=roomID).first().pk
+            new_data['parent_room'] = parent_room_pk
+        except ObjectDoesNotExist:
+            new_data['parent_room'] = None
+        
+        try:
+            serializer = self.get_serializer(data=new_data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 class AreaDetail(viewsets.ModelViewSet):
     queryset = models.Area.objects.all()
     serializer_class = serializers.AreaSerializer
@@ -92,7 +118,7 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         partial = True
         new_data = copy.deepcopy(request.data)
-        new_data = new_data[0]
+        new_data = new_data
         # We will attempt to update first, if the character + component type + quantity doesn't exist we'll create it
         print('data object is: ', new_data)
         for item in new_data:
