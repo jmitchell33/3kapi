@@ -30,13 +30,10 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = ('id', 'roomID', 'parent_area', 'room_short', 'room_exits', 'room_long')
 
 class MonsterSerializer(serializers.ModelSerializer):
-    parent_area_name = serializers.PrimaryKeyRelatedField(
-        queryset=Area.objects.all(), source='name', write_only=True
-    )
 
     class Meta:
         model = Monster
-        fields = ('id', 'parent_area', 'parent_room', 'parent_area_name', 'short', 'description', 'size', 'notes', 'scaler')
+        fields = ('id', 'parent_area', 'parent_room', 'short', 'description', 'size', 'notes', 'scaler')
 
 class MonsterAttackSerializer(serializers.ModelSerializer):
     parent_monster_name = serializers.PrimaryKeyRelatedField(
