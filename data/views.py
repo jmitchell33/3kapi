@@ -92,21 +92,43 @@ class RoomDetail(viewsets.ModelViewSet):
         partial = True
         new_data = copy.deepcopy(request.data)
         area_name = new_data.get('parent_area')
+        # If the room already exists with the same data, patch any new data
         try:
-            parent_pk = models.Area.objects.filter(name=area_name).first().pk
-            new_data['parent_area'] = parent_pk
-            serializer = self.get_serializer(data=new_data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            room = models.Room.objects.get(roomID=new_data['roomID'])
+            if room.room_long == new_data['room_long'] and room.room_short == new_data['room_short']:
+                pass
+            else:
+                try:
+                    parent_pk = models.Area.objects.filter(name=area_name).first().pk
+                    new_data['parent_area'] = parent_pk
+                    serializer = self.get_serializer(data=new_data)
+                    serializer.is_valid(raise_exception=True)
+                    self.perform_update(serializer)
+                    headers = self.get_success_headers(serializer.data)
+                    return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
+                except ObjectDoesNotExist:
+                    new_data['parent_area'] = None
+                    serializer = self.get_serializer(data=new_data)
+                    serializer.is_valid(raise_exception=True)
+                    self.perform_update(serializer)
+                    headers = self.get_success_headers(serializer.data)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)    
         except ObjectDoesNotExist:
-            new_data['parent_area'] = None
-            serializer = self.get_serializer(data=new_data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            try:
+                parent_pk = models.Area.objects.filter(name=area_name).first().pk
+                new_data['parent_area'] = parent_pk
+                serializer = self.get_serializer(data=new_data)
+                serializer.is_valid(raise_exception=True)
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            except ObjectDoesNotExist:
+                new_data['parent_area'] = None
+                serializer = self.get_serializer(data=new_data)
+                serializer.is_valid(raise_exception=True)
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         except:
             emessage=serializer.errors
             return Response({
