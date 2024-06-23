@@ -80,7 +80,7 @@ class ItemDetail(viewsets.ModelViewSet):
             return Response({
                 'status': 'Bad request',
                 'message': emessage,
-            }, status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_421_MISDIRECTED_REQUEST)
 
 class MonsterDetail(viewsets.ModelViewSet):
     queryset = models.Monster.objects.all()
