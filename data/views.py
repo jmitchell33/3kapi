@@ -58,7 +58,7 @@ class MonsterDetail(viewsets.ModelViewSet):
         try:
             area_name = new_data.get('parent_area')
             parent_area = models.Area.objects.filter(name=area_name).first()
-            new_data['parent_area_name'] = parent_area.name
+            new_data['parent_area_name'] = parent_area.pk
             new_data['parent_area'] = parent_area.pk
         except:
             new_data['parent_area_name'] = None
