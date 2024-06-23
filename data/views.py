@@ -62,9 +62,9 @@ class MonsterDetail(viewsets.ModelViewSet):
         except:
             new_data['parent_area'] = None
         try:
-            room_vnum = new_data.get('parent_room')
-            parent_room_pk = models.Room.objects.filter(roomID=room_vnum).first().pk
-            new_data['parent_room'] = parent_room_pk
+            room_vnum = new_data.get('roomID')
+            parent_room = models.Room.objects.filter(roomID=room_vnum).first()
+            new_data['parent_room'] = parent_room.pk
         except:
             new_data['parent_room'] = None
         try:
