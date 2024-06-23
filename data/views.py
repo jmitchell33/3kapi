@@ -56,6 +56,12 @@ class MonsterDetail(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             new_data['parent_area'] = None
         try:
+            room_vnum = new_data.get('parent_room')
+            parent_room_pk = models.Monster.objects.filter(roomID=room_vnum).first().pk
+            new_data['parent_room'] = parent_room_pk
+        except ObjectDoesNotExist:
+            new_data['parent_room'] = None
+        try:
             serializer = self.get_serializer(data=new_data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
