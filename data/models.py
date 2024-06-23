@@ -246,7 +246,7 @@ class Item(models.Model):
     parent_room = models.ForeignKey(Area, related_name='room_items', on_delete=models.CASCADE, blank=True, null=True)
     short = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
-    type = models.CharField(choies=ITEM_MUD_TYPE, max_length=10, blank=True)
+    type = models.CharField(choices=ITEM_MUD_TYPE, max_length=10, blank=True)
     slot = models.CharField(choices=ITEM_SLOT, max_length=100, blank=True)
     weight = models.CharField(choices=WEIGHT_CHOICES, max_length=255, blank=True)
     unbreakable = models.BooleanField(default=False, blank=False)
