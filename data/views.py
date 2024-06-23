@@ -49,6 +49,7 @@ class MonsterDetail(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         partial = True
         new_data = copy.deepcopy(request.data)
+
         try:
             area_name = new_data.get('parent_area')
             parent_area_pk = models.Area.objects.filter(name=area_name).first().pk
@@ -57,7 +58,7 @@ class MonsterDetail(viewsets.ModelViewSet):
             new_data['parent_area'] = None
         try:
             room_vnum = new_data.get('parent_room')
-            parent_room_pk = models.Monster.objects.get(roomID=room_vnum).pk
+            parent_room_pk = models.Room.objects.filter(roomID=room_vnum).first().pk
             new_data['parent_room'] = parent_room_pk
         except ObjectDoesNotExist:
             new_data['parent_room'] = None
