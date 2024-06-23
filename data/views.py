@@ -57,7 +57,7 @@ class MonsterDetail(viewsets.ModelViewSet):
             new_data['parent_area'] = None
         try:
             room_vnum = new_data.get('parent_room')
-            parent_room_pk = models.Monster.objects.filter(roomID=room_vnum).first().pk
+            parent_room_pk = models.Monster.objects.get(roomID=room_vnum).pk
             new_data['parent_room'] = parent_room_pk
         except ObjectDoesNotExist:
             new_data['parent_room'] = None
