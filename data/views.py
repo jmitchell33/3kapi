@@ -49,7 +49,6 @@ class MonsterDetail(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         partial = True
         new_data = copy.deepcopy(request.data)
-
         try:
             area_name = new_data.get('parent_area')
             parent_area_pk = models.Area.objects.filter(name=area_name).first().pk
@@ -69,7 +68,11 @@ class MonsterDetail(viewsets.ModelViewSet):
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            emessage=serializer.errors
+            return Response({
+                'status': 'Bad request',
+                'message': emessage,
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 class AreaDetail(viewsets.ModelViewSet):
     queryset = models.Area.objects.all()
