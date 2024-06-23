@@ -189,6 +189,13 @@ ITEM_SLOT = (
     ('Unknown', 'Unknown'),
 )
 
+ITEM_MUD_TYPE = (
+    ('i','i'),
+    ('a','a'),
+    ('w', 'w'),
+    ('o', 'o'),
+)
+
 REALM_CHOICES = (
     ('Chaos', 'Chaos'),
     ('Fantasy', 'Fantasy'),
@@ -236,9 +243,11 @@ class Monster_AttackType(models.Model):
 class Item(models.Model):
     parent_monster = models.ForeignKey(Monster, related_name='monster_items', on_delete=models.CASCADE, blank=True, null=True)
     parent_area = models.ForeignKey(Area, related_name='area_items', on_delete=models.CASCADE, blank=True, null=True)
+    parent_room = models.ForeignKey(Area, related_name='room_items', on_delete=models.CASCADE, blank=True, null=True)
     short = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
-    slot = models.CharField(choices=ITEM_SLOT, max_length=100, blank=False)
+    type = models.CharField(choies=ITEM_MUD_TYPE, max_length=10, blank=True)
+    slot = models.CharField(choices=ITEM_SLOT, max_length=100, blank=True)
     weight = models.CharField(choices=WEIGHT_CHOICES, max_length=255, blank=True)
     unbreakable = models.BooleanField(default=False, blank=False)
     cursed = models.BooleanField(default=False, blank=False)

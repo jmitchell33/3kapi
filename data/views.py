@@ -30,13 +30,13 @@ class EternalPowerDetail(viewsets.ModelViewSet):
                 instance._prefetched_objects_cache = {}
                 prefetch_related_objects([instance], *queryset._prefetch_related_lookups)
 
-            return Response(serializer.data)
+            return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(status=status.HTTP_201_CREATED, headers=headers)
         except:
             emessage=serializer.errors
             return Response({
@@ -47,6 +47,40 @@ class EternalPowerDetail(viewsets.ModelViewSet):
 class ItemDetail(viewsets.ModelViewSet):
     queryset = models.Item.objects.all()
     serializer_class = serializers.ItemSerializer
+
+    def create(self, request, *args, **kwargs):
+        partial = True
+        new_data = copy.deepcopy(request.data)
+        try:
+            area_name = new_data.get('parent_area')
+            parent_area = models.Area.objects.filter(name=area_name).first()
+            new_data['parent_area'] = parent_area.pk
+        except:
+            new_data['parent_area'] = None
+        try:
+            room_vnum = new_data.get('roomID')
+            parent_room = models.Room.objects.filter(roomID=room_vnum).first()
+            new_data['parent_room'] = parent_room.pk
+        except:
+            new_data['parent_room'] = None
+        try:
+            parent_monster = new_data.get('monster_short')
+            parent_monster = models.Monster.objects.filter(short=parent_monster).first()
+            new_data['parent_monster'] = parent_monster.pk
+        except:
+            new_data['parent_monster'] = None
+        try:
+            serializer = self.get_serializer(data=new_data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(status=status.HTTP_201_CREATED, headers=headers)
+        except:
+            emessage=serializer.errors
+            return Response({
+                'status': 'Bad request',
+                'message': emessage,
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 class MonsterDetail(viewsets.ModelViewSet):
     queryset = models.Monster.objects.all()
@@ -72,7 +106,7 @@ class MonsterDetail(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(status=status.HTTP_201_CREATED, headers=headers)
         except:
             emessage=serializer.errors
             return Response({
@@ -99,14 +133,14 @@ class RoomDetail(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(status=status.HTTP_201_CREATED, headers=headers)
         except ObjectDoesNotExist:
             new_data['parent_area'] = None
             serializer = self.get_serializer(data=new_data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(status=status.HTTP_201_CREATED, headers=headers)
         except:
             emessage=serializer.errors
             return Response({
@@ -154,13 +188,13 @@ class CraftingSatchelDetail(viewsets.ModelViewSet):
                     # and then re-prefetch related objects
                     instance._prefetched_objects_cache = {}
                     prefetch_related_objects([instance], *queryset._prefetch_related_lookups)
-                return Response(serializer.data)
+                return Response(status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
                 serializer = self.get_serializer(data=new_data)
                 serializer.is_valid(raise_exception=True)
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+                return Response(status=status.HTTP_201_CREATED, headers=headers)
             except:
                 emessage=serializer.errors
                 return Response({
