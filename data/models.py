@@ -251,6 +251,7 @@ class Item(models.Model):
     weight = models.CharField(choices=WEIGHT_CHOICES, max_length=255, blank=True)
     unbreakable = models.BooleanField(default=False, blank=False)
     cursed = models.BooleanField(default=False, blank=False)
+    block = models.IntegerField(null=True)
     hp_regen = models.IntegerField(null=True)
     sp_regen = models.IntegerField(null=True)
     hp_drain = models.IntegerField(null=True)
