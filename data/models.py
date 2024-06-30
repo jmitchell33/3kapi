@@ -256,7 +256,7 @@ class Item(models.Model):
     short = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
     type = models.CharField(choices=ITEM_MUD_TYPE, max_length=10, blank=True)
-    classifaction = models.CharField(choices=ITEM_CLASSIFICATION, max_length=20, blank=True)
+    classification = models.CharField(choices=ITEM_CLASSIFICATION, max_length=20, blank=True)
     slot = models.CharField(choices=ITEM_SLOT, max_length=100, blank=True)
     weight = models.CharField(choices=WEIGHT_CHOICES, max_length=255, blank=True)
     unbreakable = models.BooleanField(default=False, blank=False)
