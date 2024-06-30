@@ -10,7 +10,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'parent_monster', 'parent_area', 'parent_room', 'short', 'type', 'description', 'slot', 'weight', 'unbreakable', 'cursed', 'block', 'hp_regen', 'sp_regen', 'hp_drain', 'sp_drain', 'ftouchable', 'transmutable', 'duplicable', 'bind_on_pickup', 'bind_on_equip', 'stats_str', 'stats_con', 'stats_int', 'stats_wis', 'stats_dex', 'stats_cha', 'smd', 'specials', 'edged', 'blunt', 'fire', 'ice', 'acid', 'electricity', 'mind', 'energy', 'poison', 'radiation')
+        fields = ('id', 'parent_monster', 'parent_area', 'parent_room', 'short', 'type', 'classifaction', 'description', 'slot', 'weight', 'unbreakable', 'cursed', 'standard_resist_range', 'block', 'hp_regen', 'sp_regen', 'hp_drain', 'sp_drain', 'ftouchable', 'transmutable', 'duplicable', 'bind_on_pickup', 'bind_on_equip', 'legendary', 'stats_str', 'stats_con', 'stats_int', 'stats_wis', 'stats_dex', 'stats_cha', 'smd', 'specials', 'edged', 'blunt', 'fire', 'ice', 'acid', 'electricity', 'mind', 'energy', 'poison', 'radiation')
 
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:

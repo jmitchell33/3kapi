@@ -163,7 +163,7 @@ WEIGHT_CHOICES = (
     ("You'll most likely herniate a disc lifting this.", "You'll most likely herniate a disc lifting this.")
 )
 
-ITEM_TYPE = (
+ITEM_CLASSIFICATION = (
     ('Normal', 'Normal'),
     ('Legendary', 'Legendary'),
     ('World Drop', 'World Drop'),
@@ -187,6 +187,15 @@ ITEM_SLOT = (
     ('Other', 'Other'),
     ('Magical', 'Magical'),
     ('Unknown', 'Unknown'),
+    ('Cloak', 'Cloak'),
+    ('Ring', 'Ring'),
+    ('Armour', 'Armour'),
+    ('Other', 'Other'),
+    ('Amulet', 'Amulet'),
+    ('Helmet', 'Helmet'),
+    ('Gloves', 'Gloves'),
+    ('Boots', 'Boots'),
+    ('Headband', 'Headband'),
 )
 
 ITEM_MUD_TYPE = (
@@ -247,10 +256,12 @@ class Item(models.Model):
     short = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True)
     type = models.CharField(choices=ITEM_MUD_TYPE, max_length=10, blank=True)
+    classifaction = models.CharField(choices=ITEM_CLASSIFICATION, max_length=20, blank=True)
     slot = models.CharField(choices=ITEM_SLOT, max_length=100, blank=True)
     weight = models.CharField(choices=WEIGHT_CHOICES, max_length=255, blank=True)
     unbreakable = models.BooleanField(default=False, blank=False)
     cursed = models.BooleanField(default=False, blank=False)
+    standard_resist_range = models.BooleanField(default=True, blank=True)
     block = models.IntegerField(null=True)
     hp_regen = models.IntegerField(null=True)
     sp_regen = models.IntegerField(null=True)
@@ -261,6 +272,7 @@ class Item(models.Model):
     duplicable = models.BooleanField(default=False, blank=False)
     bind_on_pickup = models.BooleanField(default=False, blank=False)
     bind_on_equip = models.BooleanField(default=False, blank=False)
+    legendary = models.BooleanField(default=False, blank=False)
     stats_str = models.IntegerField(null=True)
     stats_con = models.IntegerField(null=True)
     stats_int = models.IntegerField(null=True)
